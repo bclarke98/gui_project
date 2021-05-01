@@ -1,0 +1,19 @@
+{% extends 'search.tmpl' %}
+
+{% block jumbo %}
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">An error has occurred!</h1>
+        <p class="lead text-muted">
+            Your user session has been reset to clear any improperly cached values.
+            Click on the error message below to return to the main page.
+        </p>
+        <div class="alert alert-dark" id="err" role="alert" onclick="redirect('{{url_for(redir)}}')">
+            {{response['message']}}
+        </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block content %}
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'search.tmpl' %}
+
+{% block jumbo %}
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">Your Blocked Songs</h1>
+        <p class="lead text-muted">
+            You have {{numsongs}} song{{'s' if numsongs != 1}} in your blocklist!
+        </p>
+        {% if numsongs > 0 %}
+        <p class="lead text-muted">Click "Remove" to remove a song.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
+
+{% block content %}
+<input type="hidden" id="roomNum" value="{{user.id}}">
+{% if numsongs > 0 %}
+<div class="album py-5 bg-light">
+<div class="container">
+<div class="row">
+{% for song in songs %}
+<input type="hidden" id="{{song.songuri}}" value="{{song.__str__()}}">
+<div class="col-md-4">
+  <div class="card mb-4 box-shadow">
+    <img class="card-img-top" src="{{song.albumart}}" alt="{{song.songname}} - {{song.artistname}} : Album Cover">
+    <div class="card-body">
+      <p class="card-text">{{song.songname}} - {{song.artistname}}</p>
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="btn-group">
+          <button type="button" class="btn btn-sm btn-outline-secondary" onclick="unblockSong('{{song.songuri}}')">Remove</button>
+        </div>
+        <small class="text-muted">{{song.artistname}}</small>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+</div>
+</div>
+</div>
+{% endif %}
+
+{% endblock %}

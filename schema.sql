@@ -1,0 +1,33 @@
+CREATE TABLE IF NOT EXISTS users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  spotifyid TEXT UNIQUE NOT NULL,
+  refreshtoken TEXT NOT NULL,
+  accesstoken TEXT NOT NULL,
+  viewingblocked INTEGER DEFAULT 0,
+  enabled INTEGER DEFAULT 1
+);
+
+CREATE TABLE IF NOT EXISTS requests (
+  requestid INTEGER PRIMARY KEY AUTOINCREMENT,
+  roomid INTEGER,
+  songuri TEXT NOT NULL,
+  songname TEXT NOT NULL,
+  artistname TEXT NOT NULL,
+  albumname TEXT NOT NULL,
+  albumart TEXT NOT NULL,
+  FOREIGN KEY(roomid) REFERENCES users(id)
+);
+
+CREATE TABLE IF NOT EXISTS blocked (
+  requestid INTEGER PRIMARY KEY AUTOINCREMENT,
+  roomid INTEGER,
+  songuri TEXT NOT NULL,
+  FOREIGN KEY(roomid) REFERENCES users(id)
+);
+
+CREATE TABLE IF NOT EXISTS keys (
+  keyid INTEGER PRIMARY KEY AUTOINCREMENT,
+  uuid TEXT NOT NULL,
+  valid INTEGER DEFAULT 1
+);
+

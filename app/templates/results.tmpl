@@ -1,0 +1,55 @@
+{% extends 'search.tmpl' %}
+
+{% block jumbo %}
+<section class="jumbotron text-center">
+  <div class="container">
+    <h1 class="jumbotron-heading">Request a Song!</h1>
+    <p class="lead text-muted">Search for a song, pick a room, and send your request!</p>
+  <div class="alert alert-info" id="infoAlert" role="alert"></div>
+  <div class="alert alert-dark" id="errorAlert" role="alert"></div>
+  <div class="input-group">
+      <div class="input-group-prepend">
+          <input type="text" class="form-control" id="query" placeholder="Song Name">
+      </div>
+      <select class="custom-select" id="roomSelect">
+          {% if not roomnum or roomnum == '0' %}
+          <option value="0" selected>Room Number</option>
+          {% endif %}
+          {% for room in rooms %}
+          <option {{'selected' if roomnum and roomnum == room}} value="{{room}}">{{room}}</option>
+          {% endfor %}
+      </select>
+      <button class="btn btn-outline-secondary" type="button" id="search">Search</button>
+  </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block content %}
+<input type="hidden" id="roomNum" value="{{roomnum if roomnum else '0'}}">
+{% if numsongs > 0 %}
+<div class="album py-5 bg-light">
+<div class="container">
+<div class="row">
+{% for song in songs %}
+<input type="hidden" id="{{song.songuri}}" value="{{song.__str__()}}">
+<div class="col-md-4">
+  <div class="card mb-4 box-shadow">
+    <img class="card-img-top" src="{{song.albumart}}" alt="{{song.songname}} - {{song.albumname}} : Album Cover">
+    <div class="card-body">
+      <p class="card-text">{{song.songname}} - {{song.artistname}}</p>
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="btn-group">
+          <button type="button" class="btn btn-sm btn-outline-secondary" onclick="requestSong('{{song.songuri}}')">Request</button>
+        </div>
+        <small class="text-muted">{{song.artistname}}</small>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+</div>
+</div>
+</div>
+{% endif %}
+{% endblock %}

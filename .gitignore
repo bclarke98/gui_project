@@ -1,0 +1,7 @@
+**/__pycache__/
+users/*
+sync_to_prod
+*.log
+*.png
+*.db
+tags

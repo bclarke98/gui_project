@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='d3xq.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='album.css') }}">
+        <script src="{{ url_for('static', filename='jquery.js') }}"></script>
+        <script src="{{ url_for('static', filename='bootstrap.bundle.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='feather.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='d3xq.js') }}?u={{ last_updated }}"></script>
+    </head>
+
+<body>
+ <header>
+      <div class="collapse bg-dark" id="navbarHeader">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-8 col-md-7 py-4">
+              <h4 class="text-white">Account</h4>
+              <ul class="list-unstyled">
+              <li><a href="{{ '/logout' if user else '/login' }}" class="text-white">{{'Logout' if user else 'Login'}}</a></li>
+              {% if user and user.valid %}
+              <li><a href="/qrcode/{{user.id}}" target="_blank" class="text-white">Get Room QR Code</a></li>
+              <li><a href="/auth/index?func={{'disable' if user.enabled else 'enable'}}_req" class="text-white">{{'Lock' if user.enabled else 'Unlock'}} Room</a></li>
+              <li><a href="/auth/index?func={{'view_requests' if user.viewingblocked else 'view_block'}}" class="text-white">{{'View Requests' if user.viewingblocked else 'View Blocked Songs'}}</a></li>
+              {% endif %}
+              </ul>
+            </div>
+            <div class="col-sm-4 offset-md-1 py-4">
+              <h4 class="text-white">Contact</h4>
+              <ul class="list-unstyled">
+                <li><a href="https://twitter.com/_bclarke98" target="_blank" class="text-white">Follow on Twitter</a></li>
+                <li><a href="mailto:contact@d3x.me" class="text-white">Email me</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="navbar navbar-dark bg-dark box-shadow">
+        <div class="container d-flex justify-content-between">
+          <a href="#" class="navbar-brand d-flex align-items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+            <strong>Q-tify</strong>
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main role="main">
+        <!-- Start Modal -->
+        <div class="modal fade" id="modalConfirm" tabindex="-1" role="dialog" aria-labelledby="modalConfirmTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="modalConfirmTitleText">Confirm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body" id="modalBody">
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" id="modalYes">Confirm</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="modalNo">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Modal -->
+    {% block jumbo %}
+    {% endblock %}
+    {% block content %}
+    {% endblock %}
+
+    </main>
+</body>
+</html>
