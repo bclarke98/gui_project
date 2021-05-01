@@ -2,7 +2,7 @@
 - Python version >= 3.6.0
 - Install Python dependencies with the command:
 ```
-pip install -r requirements.txt
+python3 -m pip install -r requirements.txt
 ```
 - Replace placeholder values in `config.py` with your Spotify API credentials (*instructions on registering with Spotify API below*)
 - Replace `http://localhost:5000/callback` value with your registered Spotify API callback URI or register it as your callback URI
